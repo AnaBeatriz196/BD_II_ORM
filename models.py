@@ -9,19 +9,15 @@ Base = declarative_base()
 
 class Usuario(Base):
     __tablename__ = 'usuarios'
-
     id = Column(Integer, primary_key=True)
     nome = Column(String(100), nullable=False)
     email = Column(String(100), unique=True, nullable=False)
     idade = Column(Integer)
     ativo = Column(Boolean, default=True)
-
     pedidos = relationship('Pedido', back_populates='usuario')
-
 
 class Produto(Base):
     __tablename__ = 'produtos'
-
     id = Column(Integer, primary_key=True)
     nome = Column(String(100), nullable=False)
     preco = Column(Float, nullable=False)
@@ -29,10 +25,8 @@ class Produto(Base):
     estoque = Column(Integer, default=0)
     criado_em = Column(DateTime, default=datetime.now)
 
-
 class Pedido(Base):
     __tablename__ = 'pedidos'
-
     id = Column(Integer, primary_key=True)
     usuario_id = Column(Integer, ForeignKey('usuarios.id'), nullable=False)
     produto_id = Column(Integer, ForeignKey('produtos.id'), nullable=False)
@@ -47,10 +41,8 @@ class Pedido(Base):
         UniqueConstraint('usuario_id', 'produto_id', name='uq_usuario_produto'),
     )
 
-
 class Avaliacao(Base):
     __tablename__ = 'avaliacoes'
-
     id = Column(Integer, primary_key=True)
     usuario_id = Column(Integer, ForeignKey('usuarios.id'), nullable=False)
     nota = Column(Integer, nullable=False)
